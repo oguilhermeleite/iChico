@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 
 export default function ScoreCard({ match, timeRange }) {
- const [score, setScore] = useState(75)
+ const [score, setScore] = useState(0)
  const [trend, setTrend] = useState('+5.2%')
  const [chartData, setChartData] = useState([])
 
@@ -11,18 +11,23 @@ export default function ScoreCard({ match, timeRange }) {
  const generateChartData = () => {
  const points = timeRange === '6h' ? 12 : timeRange === '24h' ? 24 : 30
  const data = []
- const startScore = 65 + Math.random() * 20
+ const startScore = 55 + Math.random() * 30
       
  for (let i = 0; i < points; i++) {
  data.push({
  time: `${i}h`,
- score: startScore + (Math.sin(i / points * Math.PI) * 15) + (Math.random() - 0.5) * 5,
+ score: Math.max(0, Math.min(100, startScore + (Math.sin(i / points * Math.PI) * 20) + (Math.random() - 0.5) * 8)),
         })
       }
  return data
     }
 
- setChartData(generateChartData())
+ const newData = generateChartData()
+ setChartData(newData)
+ // Pega o último score do gráfico
+ if (newData.length > 0) {
+      setScore(Math.round(newData[newData.length - 1].score))
+    }
   }, [timeRange])
 
  const getScoreColor = (score) => {

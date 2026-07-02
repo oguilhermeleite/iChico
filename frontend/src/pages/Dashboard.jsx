@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import ScoreCard from '../components/ScoreCard'
 import MarketCard from '../components/MarketCard'
 import SmartMoneyCard from '../components/SmartMoneyCard'
 import ConsensusCard from '../components/ConsensusCard'
@@ -65,6 +66,9 @@ export default function Dashboard() {
           ))}
         </select>
       </div>
+
+      {/* Score Principal */}
+      <ScoreCard match={selectedMatch} timeRange={timeRange} />
 
       {/* Dinheiro x Valor: conecta Market e Value Bets numa unica leitura */}
       <MarketValueConnect outcomes={outcomes} matchLabel={matchLabel} />
