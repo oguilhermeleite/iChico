@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "services": {
+    "frontend": {
+      "root": "frontend",
+      "framework": "vite",
+      "build": {
+        "command": "npm run build"
+      }
+    },
+    "backend": {
+      "root": "backend",
+      "framework": "nodejs"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "type": "service",
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/ws/(.*)",
+      "destination": {
+        "type": "service",
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "type": "service",
+        "service": "frontend"
+      }
+    }
+  ]
+}
