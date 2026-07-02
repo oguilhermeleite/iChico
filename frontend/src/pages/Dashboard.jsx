@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import ScoreCard from '../components/ScoreCard'
 import MarketCard from '../components/MarketCard'
 import SmartMoneyCard from '../components/SmartMoneyCard'
 import ConsensusCard from '../components/ConsensusCard'
@@ -10,9 +9,6 @@ import AlertsFeed from '../components/AlertsFeed'
 import ValueBetsPanel from '../components/ValueBetsPanel'
 import MarketValueConnect from '../components/MarketValueConnect'
 import { mockData } from '../data/mockData'
-
-const WS_URL =
-  import.meta.env.VITE_WS_URL || 'ws://localhost:3001/ws/alerts'
 
 // Odds por casa usadas na deteccao de value (em producao vem da API)
 const ODDS_BY_MATCH = {
@@ -70,16 +66,13 @@ export default function Dashboard() {
         </select>
       </div>
 
-      {/* Score Principal */}
-      <ScoreCard match={selectedMatch} timeRange={timeRange} />
-
       {/* Dinheiro x Valor: conecta Market e Value Bets numa unica leitura */}
       <MarketValueConnect outcomes={outcomes} matchLabel={matchLabel} />
 
       {/* Value Bets (automatico) + Alertas (tempo real) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ValueBetsPanel outcomes={outcomes} matchLabel={matchLabel} />
-        <AlertsFeed wsUrl={WS_URL} />
+        <AlertsFeed />
       </div>
 
       {/* Grid de Cards */}

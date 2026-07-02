@@ -1,4 +1,4 @@
-import { useAlerts } from '../hooks/useAlerts'
+import { useAlertsSimulated } from '../hooks/useAlertsSimulated'
 
 const TYPE_META = {
  STEAM: { label: 'Smart Money', color: '#ff4d4d', tone: 'Queda rapida de odd' },
@@ -13,8 +13,8 @@ function timeAgo(iso) {
  return `${m}min`
 }
 
-export default function AlertsFeed({ wsUrl }) {
- const { alerts, status, clear } = useAlerts(wsUrl)
+export default function AlertsFeed() {
+ const { alerts, status, clear } = useAlertsSimulated()
 
  const statusLabel =
  status === 'online' ? 'Ao vivo' : status === 'connecting' ? 'Conectando' : 'Offline'
