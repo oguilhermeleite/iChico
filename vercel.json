@@ -3,10 +3,7 @@
   "services": {
     "frontend": {
       "root": "frontend",
-      "framework": "vite",
-      "build": {
-        "command": "npm run build"
-      }
+      "framework": "vite"
     },
     "backend": {
       "root": "backend",
