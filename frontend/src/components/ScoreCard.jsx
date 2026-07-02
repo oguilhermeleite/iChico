@@ -4,6 +4,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 export default function ScoreCard({ match, timeRange }) {
  const [score, setScore] = useState(0)
  const [trend, setTrend] = useState('+5.2%')
+ const [scoreTrend, setScoreTrend] = useState('up') // 'up' or 'down'
  const [chartData, setChartData] = useState([])
 
  useEffect(() => {
@@ -26,7 +27,10 @@ export default function ScoreCard({ match, timeRange }) {
  setChartData(newData)
  // Pega o último score do gráfico
  if (newData.length > 0) {
-      setScore(Math.round(newData[newData.length - 1].score))
+      const lastScore = Math.round(newData[newData.length - 1].score)
+      const firstScore = newData[0].score
+      setScore(lastScore)
+      setScoreTrend(lastScore > firstScore ? 'up' : 'down')
     }
   }, [timeRange])
 
@@ -46,8 +50,9 @@ export default function ScoreCard({ match, timeRange }) {
     <div className="bg-secondary border border-chicoia-lime rounded-lg p-8 space-y-6">{/* Header */}
       <div className="flex items-start justify-between"><div><h1 className="text-4xl font-bold text-chicoia-lime mb-2">iChico Score
           </h1><p className="text-gray-400">{match.team1} vs {match.team2} • {match.time}
-          </p></div><div className={`text-6xl font-bold ${getScoreColor(score)}`}>{Math.round(score)}
-        </div></div>{/* Description */}
+          </p></div><div className="flex flex-col items-end"><div className={`text-6xl font-bold ${getScoreColor(score)}`}>{Math.round(score)}%
+        </div><div className={`text-sm font-semibold mt-1 flex items-center gap-1 ${scoreTrend === 'up' ? 'text-green-400' : 'text-red-400'}`}>{scoreTrend === 'up' ? '↑' : '↓'} Confiança do Mercado
+          </div></div></div>{/* Description */}
       <div className="bg-primary rounded-lg p-4 border border-chicoia-lime/20"><p className="text-sm text-gray-300">{getScoreDescription(score)} - O mercado está {score > 70 ? 'aumentando' : score > 40 ? 'mantendo' : 'diminuindo'} a confiança em {match.team1}. 
  Variação de {trend} nas últimas {timeRange === '6h' ? '6 horas' : timeRange === '24h' ? '24 horas' : '7 dias'}.
         </p></div>{/* Trend */}
